@@ -1,2 +1,2 @@
 # Sentimental.ly
-# scraping your facebook feed for sentiment trends
+scraping your facebook feed for sentiment trends
