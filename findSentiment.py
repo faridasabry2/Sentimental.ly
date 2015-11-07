@@ -21,7 +21,8 @@ def gettingFacebookPageData(page_id, access_token):
 	# retrieve data
 	request = requests.get(url)
 	r = json.loads(request.text)
-	print r
+	if ('error' in r):
+		return "error fetching data"
 	data = r['data']
 
 	# get all data
@@ -46,9 +47,14 @@ def calculateSentiments(data):
 			key = 'story'
 		elif ('message' in post):
 			key = 'message'
-		sentiment = indicoio.sentiment_hq(post[key])
-		sentiment = (sentiment - 0.5) / 0.5
-		data[i]['sentiment'] = sentiment
+		if ('story' not in post and 'message' not in post):
+			key = 'message'
+			data[i]['message'] = ''
+			post = data[i]
+		else:
+			sentiment = indicoio.sentiment_hq(post[key])
+			sentiment = (sentiment - 0.5) / 0.5
+			data[i]['sentiment'] = sentiment
 
 	dataJSONstring = json.dumps(data, indent=4, sort_keys=True)
 	dataDictionary = ast.literal_eval(dataJSONstring)
