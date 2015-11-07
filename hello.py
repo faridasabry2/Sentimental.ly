@@ -1,4 +1,4 @@
-#import findSentiment
+import findSentiment
 from flask import request, Flask, render_template
 app = Flask(__name__)
 
@@ -8,7 +8,7 @@ def hello():
 
 @app.route("/post_find", methods=["POST"])
 def eventually():
-	fbPageName = request.form.get("page_name")
+	return request.form.get("page_name")
 
 	if (getFacebookPageData(fbPageName) == 'page not found'):
 		print 'page not found'
