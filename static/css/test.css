@@ -1,0 +1,29 @@
+body {
+	margin-left: 90px;
+	margin-right: 90px;
+	background-color: #F68080
+}
+
+#header h1 {
+	color: white;
+	font-size: 90px;
+}
+
+#header h4 {
+	color: white;
+}
+
+.form {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.chart {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.chart .container{
+	text-align: center;
+	border: solid 1px;
+}
