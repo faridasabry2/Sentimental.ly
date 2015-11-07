@@ -10,10 +10,10 @@ def hello():
 def eventually():
 
 	fbPageName = request.form.get("page_name")
-	if (getFacebookPageData(fbPageName) == 'page not found'):
-		print 'page not found'
-	else: 
-		return fbPageName
+	findSentiment.getFacebookPageData(fbPageName)
+	return render_template("test.html")
+	
 
 if __name__ == "__main__":
-    app.run()
+	app.debug = True
+	app.run()

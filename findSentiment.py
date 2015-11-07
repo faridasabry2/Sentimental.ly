@@ -19,6 +19,8 @@ def gettingFacebookPageData(page_id, access_token):
 	# retrieve data
 	request = requests.get(url)
 	r = json.loads(request.text)
+	#print "---------------------"
+	print json.dumps(r, indent=4, sort_keys=True)
 	data = r['data']
 
 	# get all data
@@ -56,8 +58,5 @@ def formatDate(string):
 	return string	
 
 def writeJSON(data):
-	with open('fbPageData.json', 'w') as f:
+	with open('/static/js/fbPageData.json', 'w') as f:
  		json.dump(data, f)
-getFacebookPageData('testMyHappiness')
-
-getFacebookPageData('testMyHappiness')
