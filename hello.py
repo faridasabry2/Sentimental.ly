@@ -1,4 +1,4 @@
-#import sentimentcalculation
+import findSentiment
 from flask import request, Flask, render_template
 app = Flask(__name__)
 
@@ -8,9 +8,9 @@ def hello():
 
 @app.route("/post_find", methods=["POST"])
 def eventually():
-	#hdata = request.form.get("page_name")
-	#getFacebookPageData(hdata)
-	return request.form.get("page_name")
+	fbPageName = request.form.get("page_name")
+	getFacebookPageData(page_id)
+	return fbPageName
 
 
 if __name__ == "__main__":
