@@ -3,6 +3,7 @@ import requests
 import json
 import settings
 import ast
+import os
 
 def getFacebookPageData(page_id):
 	access_token = settings.get('ACCESS_TOKEN')
@@ -19,8 +20,6 @@ def gettingFacebookPageData(page_id, access_token):
 	# retrieve data
 	request = requests.get(url)
 	r = json.loads(request.text)
-	#print "---------------------"
-	print json.dumps(r, indent=4, sort_keys=True)
 	data = r['data']
 
 	# get all data
@@ -40,10 +39,16 @@ def calculateSentiments(data):
 	for i in range(0, len(data)):
 		post = data[i]
 
+		print "ERROR ====================================="
+		print json.dumps(post, indent=4, sort_keys=True)
+		print "ERROR ====================================="
 		date = formatDate(data[i]['created_time'])
 		data[i]['created_time'] = date
-
-		sentiment = indicoio.sentiment_hq(post['message'])
+		if ('story' in post):
+			key = 'story'
+		elif ('message' in post):
+			key = 'message'
+		sentiment = indicoio.sentiment_hq(post[key])
 		sentiment = (sentiment - 0.5) / 0.5
 		data[i]['sentiment'] = sentiment
 
@@ -55,8 +60,10 @@ def formatDate(string):
 	string = string.strip("+0000")
 	string = string.replace("T"," ")
 
-	return string	
+	return string
 
 def writeJSON(data):
-	with open('/static/js/fbPageData.json', 'w') as f:
+	currentPath = os.getcwd()
+	path = currentPath + '/static/js/fbPageData.json'
+	with open(path, 'w') as f:
  		json.dump(data, f)
