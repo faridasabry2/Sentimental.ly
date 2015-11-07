@@ -14,6 +14,7 @@
 
 	<!-- stylesheet and js -->
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/test.css') }}">
+	<script type="text/javascript" src= "{{ url_for('static',filename='js/chart.js') }}"></script>
 	
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -68,7 +69,7 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" src="chart.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/chart.js') }}"></script>
 </body>
 </html>
 

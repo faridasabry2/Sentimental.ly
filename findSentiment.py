@@ -58,6 +58,6 @@ def formatDate(string):
 def writeJSON(data):
 	with open('fbPageData.json', 'w') as f:
  		json.dump(data, f)
-
+getFacebookPageData('testMyHappiness')
 
 getFacebookPageData('testMyHappiness')

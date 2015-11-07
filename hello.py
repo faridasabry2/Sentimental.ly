@@ -8,11 +8,11 @@ def hello():
 
 @app.route("/post_find", methods=["POST"])
 def eventually():
-	return request.form.get("page_name")
 
+	fbPageName = request.form.get("page_name")
 	if (getFacebookPageData(fbPageName) == 'page not found'):
 		print 'page not found'
-	else:
+	else: 
 		return fbPageName
 
 if __name__ == "__main__":
