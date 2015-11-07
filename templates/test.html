@@ -10,6 +10,7 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 
 	<!-- stylesheet and js -->
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/test.css') }}">
@@ -40,7 +41,28 @@
 		</div>
 	</div>
 	<div class="col-md-8">
-		<div class="chart">
+		<!-- Drop down + checkbox for modifying chart -->
+		 <table>
+          <tr>
+            <td>
+              <select>
+                <option id="item" value="posts">Page Posts</option>
+                <option id="item" value="comments">Page Post Comments</option>
+              </select>
+            </td>
+        </tr>
+        <tr>
+              <td>
+                <ul>
+                  <li><input type="checkbox" class="checkbox" name="check" value="sort"> </li>
+                  <li>Sort by percent change</li>
+                </ul>
+              </div>
+            </td>
+
+        </tr>
+          </table> <!-- end chart options -->
+		<div id="chart-container">
 			<p>chart goes here</p>
 		</div>
 	</div>

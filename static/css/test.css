@@ -18,14 +18,12 @@ body {
 	padding-bottom: 10px;
 }
 
-.chart {
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
 
-.chart .container{
+#chart-container{
 	text-align: center;
 	border: solid 1px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .positive{
