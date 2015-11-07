@@ -216,7 +216,6 @@ function barChart(dataset){
 };
 
 //Load data and call bar chart function 
-alert();
 d3.json("/static/js/fbPageData.json", function(error, data){
 		
 		if(error){
@@ -226,7 +225,7 @@ d3.json("/static/js/fbPageData.json", function(error, data){
 			data.forEach(function(d) {
 				d.postSentiment = d.sentiment;
 				//d.commentSentiment = d.
-				var format = d3.time.format("%Y-%m-%d %H:%M:%S");
+				//var format = d3.time.format("%Y-%m-%d %H:%M:%S");
 				//d.created_time = format.parse(d.created_time);
 			});
 

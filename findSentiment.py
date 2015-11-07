@@ -7,6 +7,7 @@ import os
 
 def getFacebookPageData(page_id):
 	access_token = settings.get('ACCESS_TOKEN')
+	page_id = page_id.replace(" ", "")
 	gettingFacebookPageData(page_id, access_token)
 
 def gettingFacebookPageData(page_id, access_token):
@@ -20,6 +21,7 @@ def gettingFacebookPageData(page_id, access_token):
 	# retrieve data
 	request = requests.get(url)
 	r = json.loads(request.text)
+	print r
 	data = r['data']
 
 	# get all data
@@ -39,11 +41,6 @@ def calculateSentiments(data):
 
 	for i in range(0, len(data)):
 		post = data[i]
-		print "ERROR STARRRTTTTTTTT data====================================="
-		print json.dumps(data, indent=4, sort_keys=True)
-		print "ERROR post = data[i]====================================="
-		print json.dumps(post, indent=4, sort_keys=True)
-		print "ERROR EEENNNDDDDD====================================="
 		date = formatDate(data[i]['created_time'])
 		data[i]['created_time'] = date
 		if ('story' in post):
@@ -69,3 +66,6 @@ def writeJSON(data):
 	path = currentPath + '/static/js/fbPageData.json'
 	with open(path, 'w') as f:
  		json.dump(data, f)
+ 	print "done writing"
+
+#getFacebookPageData("smith college")
