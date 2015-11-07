@@ -38,7 +38,6 @@ def calculateSentiments(data):
 	indicoio.config.api_key = settings.get('INDICO_API_KEY')
 
 	# calculate each sentiment and add to JSON
-
 	for i in range(0, len(data)):
 		post = data[i]
 		date = formatDate(data[i]['created_time'])
