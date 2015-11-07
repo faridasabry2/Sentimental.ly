@@ -10,8 +10,9 @@ def hello():
 def eventually():
 	fbPageName = request.form.get("page_name")
 	if (getFacebookPageData(page_id) == 'page not found'):
-		
-	return fbPageName
+		# do something
+	else:
+		return fbPageName
 
 
 if __name__ == "__main__":
