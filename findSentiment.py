@@ -28,7 +28,7 @@ def gettingFacebookPageData(page_id, access_token):
 		request = requests.get(url)
 		r = json.loads(request.text)
 		if (r['data']):
-			data.append(r['data'])
+			data.extend(r['data'])
 
 	calculateSentiments(data)
 
@@ -36,12 +36,14 @@ def calculateSentiments(data):
 	indicoio.config.api_key = settings.get('INDICO_API_KEY')
 
 	# calculate each sentiment and add to JSON
+
 	for i in range(0, len(data)):
 		post = data[i]
-
-		print "ERROR ====================================="
+		print "ERROR STARRRTTTTTTTT data====================================="
+		print json.dumps(data, indent=4, sort_keys=True)
+		print "ERROR post = data[i]====================================="
 		print json.dumps(post, indent=4, sort_keys=True)
-		print "ERROR ====================================="
+		print "ERROR EEENNNDDDDD====================================="
 		date = formatDate(data[i]['created_time'])
 		data[i]['created_time'] = date
 		if ('story' in post):
