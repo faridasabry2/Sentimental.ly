@@ -7,7 +7,7 @@ import os
 
 def getFacebookPageData(page_id):
 	access_token = settings.get('ACCESS_TOKEN')
-	gettingFacebookPageData(page_id, access_token)
+	gettingFacebookPageData(page_id.strip(' '), access_token)
 
 def gettingFacebookPageData(page_id, access_token):
 
@@ -36,7 +36,6 @@ def calculateSentiments(data):
 	indicoio.config.api_key = settings.get('INDICO_API_KEY')
 
 	# calculate each sentiment and add to JSON
-
 	for i in range(0, len(data)):
 		post = data[i]
 		print "ERROR STARRRTTTTTTTT data====================================="
