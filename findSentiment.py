@@ -80,4 +80,4 @@ def writeJSON(data):
  	print "done writing"
 
 
-getFacebookPageData("indicodatasolutions")
+#getFacebookPageData("indicodatasolutions")
