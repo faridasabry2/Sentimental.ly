@@ -39,6 +39,7 @@ def calculateSentiments(data):
 	indicoio.config.api_key = settings.get('INDICO_API_KEY')
 
 	# calculate each sentiment and add to JSON
+	toAnalyze = []
 	for i in range(0, len(data)):
 		post = data[i]
 		date = formatDate(data[i]['created_time'])
@@ -52,9 +53,12 @@ def calculateSentiments(data):
 			data[i]['message'] = ''
 			post = data[i]
 		else:
-			sentiment = indicoio.sentiment_hq(post[key])
-			sentiment = (sentiment - 0.5) / 0.5
-			data[i]['sentiment'] = sentiment
+			toAnalyze.append(post[key])
+
+	sentiments = indicoio.sentiment(toAnalyze)
+	for i in range(0, len(sentiments)):
+		sentiments[i] = (sentiments[i] - 0.5) / 0.5
+		data[i]['sentiment'] = sentiments[i]
 
 	dataJSONstring = json.dumps(data, indent=4, sort_keys=True)
 	dataDictionary = ast.literal_eval(dataJSONstring)
@@ -73,4 +77,5 @@ def writeJSON(data):
  		json.dump(data, f)
  	print "done writing"
 
-#getFacebookPageData("smith college")
+
+getFacebookPageData("testmyhappiness")
