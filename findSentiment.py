@@ -42,25 +42,26 @@ def calculateSentiments(data):
 	toAnalyze = []
 	for i in range(0, len(data)):
 		post = data[i]
+		print post
 		date = formatDate(data[i]['created_time'])
 		data[i]['created_time'] = date
 		if ('story' in post):
 			key = 'story'
 		elif ('message' in post):
 			key = 'message'
-		if ('story' not in post and 'message' not in post):
+		elif ('story' not in post and 'message' not in post):
 			key = 'message'
 			data[i]['message'] = ''
 			post = data[i]
-		else:
-			toAnalyze.append(post[key])
+		toAnalyze.append(post[key])
 
 	sentiments = indicoio.sentiment(toAnalyze)
+	
 	for i in range(0, len(sentiments)):
 		sentiments[i] = (sentiments[i] - 0.5) / 0.5
 		data[i]['sentiment'] = sentiments[i]
 
-	dataJSONstring = json.dumps(data, indent=4, sort_keys=True)
+	dataJSONstring = json.dumps(data)
 	dataDictionary = ast.literal_eval(dataJSONstring)
 	writeJSON(dataDictionary)
 
@@ -73,9 +74,10 @@ def formatDate(string):
 def writeJSON(data):
 	currentPath = os.getcwd()
 	path = currentPath + '/static/js/fbPageData.json'
+	# print json.dumps(data, indent=4, sort_keys=True)
 	with open(path, 'w') as f:
  		json.dump(data, f)
  	print "done writing"
 
 
-getFacebookPageData("testmyhappiness")
+getFacebookPageData("indicodatasolutions")
