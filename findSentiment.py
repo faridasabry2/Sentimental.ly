@@ -5,10 +5,13 @@ import settings
 import ast
 import os
 
-def getFacebookPageData(page_id):
+def writeFacebookPageDataToJSON(page_id):
 	access_token = settings.get('ACCESS_TOKEN')
 	page_id = page_id.replace(" ", "")
-	gettingFacebookPageData(page_id, access_token)
+	data = gettingFacebookPageData(page_id, access_token)
+	dataDictionary = calculateSentiments(data)
+	writeJSON(dataDictionary)
+
 
 def gettingFacebookPageData(page_id, access_token):
 
@@ -19,10 +22,17 @@ def gettingFacebookPageData(page_id, access_token):
 	url = base + node + parameters
 
 	# retrieve data
-	request = requests.get(url)
+	try:
+		request = requests.get(url)
+	except request.exceptions.ConnectionError as e:
+		handleIncorrectURL()
+
 	r = json.loads(request.text)
+	
+	print json.dumps(r, indent=4, sort_keys=True)
 	if ('error' in r):
-		return "error fetching data"
+		handleIncorrectURL()
+	
 	data = r['data']
 
 	# get all data
@@ -33,7 +43,8 @@ def gettingFacebookPageData(page_id, access_token):
 		if (r['data']):
 			data.extend(r['data'])
 
-	calculateSentiments(data)
+	print "done getting Facebook Page Data"
+	return data
 
 def calculateSentiments(data):	
 	indicoio.config.api_key = settings.get('INDICO_API_KEY')
@@ -56,14 +67,14 @@ def calculateSentiments(data):
 		toAnalyze.append(post[key])
 
 	sentiments = indicoio.sentiment(toAnalyze)
-	
+
 	for i in range(0, len(sentiments)):
 		sentiments[i] = (sentiments[i] - 0.5) / 0.5
 		data[i]['sentiment'] = sentiments[i]
 
 	dataJSONstring = json.dumps(data)
 	dataDictionary = ast.literal_eval(dataJSONstring)
-	writeJSON(dataDictionary)
+	return dataDictionary
 
 def formatDate(string):
 	string = string.strip("+0000")
@@ -79,5 +90,6 @@ def writeJSON(data):
  		json.dump(data, f)
  	print "done writing"
 
-
-#getFacebookPageData("indicodatasolutions")
+def handleIncorrectURL():
+	print "page not found error"
+	return -1

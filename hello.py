@@ -8,9 +8,8 @@ def hello():
 
 @app.route("/post_find", methods=["POST"])
 def eventually():
-
 	fbPageName = request.form.get("page_name")
-	findSentiment.getFacebookPageData(fbPageName)
+	findSentiment.writeFacebookPageDataToJSON(fbPageName)
 	return render_template("test.html")
 	
 
