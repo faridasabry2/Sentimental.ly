@@ -17,8 +17,8 @@ def gettingFacebookPageData(page_id, access_token):
 
 	#construct the URL string
 	base = "https://graph.facebook.com/v2.5"
-	node = "/" + page_id + "/feed"
-	parameters = "/?access_token=%s" % access_token
+	node = "/" + page_id + "/feed?fields=message,comments"
+	parameters = "&access_token=%s" % access_token
 	url = base + node + parameters
 
 	# retrieve data
@@ -53,7 +53,7 @@ def calculateSentiments(data):
 	toAnalyze = []
 	for i in range(0, len(data)):
 		post = data[i]
-		print post
+		#print post
 		date = formatDate(data[i]['created_time'])
 		data[i]['created_time'] = date
 		if ('story' in post):
@@ -93,3 +93,5 @@ def writeJSON(data):
 def handleIncorrectURL():
 	print "page not found error"
 	return -1
+
+#writeFacebookPageDataToJSON("testmyhappiness")
