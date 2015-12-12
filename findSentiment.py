@@ -17,9 +17,7 @@ def gettingFacebookPageData(page_id, access_token):
 
 	#construct the URL string
 	base = "https://graph.facebook.com/v2.5"
-	#node = "/" + page_id + "/feed?"
-	#node = "/" + page_id + "/feed?fields=message,comments,created_time"
-	node = "/" + page_id + "/feed?fields=message,created_time,story"
+	node = "/" + page_id + "/feed?fields=message,created_time,story,comments"
 	parameters = "&access_token=%s" % access_token
 	url = base + node + parameters
 
