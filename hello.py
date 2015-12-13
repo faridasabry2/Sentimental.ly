@@ -8,10 +8,16 @@ def hello():
 
 @app.route("/post_find", methods=["POST"])
 def eventually():
-	fbPageName = request.form.get("page_name")
+	fbPageName = request.form.get("fbpage_name")
 	findSentiment.writeFacebookPageDataToJSON(fbPageName)
 	return render_template("test.html")
 	
+
+@app.route("/posts_and_comments", methods=["POST"])
+def showLineGraphs():
+	fbPageName = request.form.get("fbpage_name")
+	findSentiment.writeFacebookPageDataToJSON(fbPageName)
+	return render_template("testComments.html")
 
 if __name__ == "__main__":
 	app.debug = True
