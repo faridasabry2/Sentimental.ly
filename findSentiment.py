@@ -75,6 +75,8 @@ def calculateSentiments(data):
 
 	dataJSONstring = json.dumps(data)
 	dataDictionary = ast.literal_eval(dataJSONstring)
+	#print "dataDictionary"
+	#print dataDictionary
 	return dataDictionary
 
 def formatDate(string):
