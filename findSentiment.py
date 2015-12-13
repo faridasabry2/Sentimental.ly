@@ -17,7 +17,7 @@ def gettingFacebookPageData(page_id, access_token):
 
 	#construct the URL string
 	base = "https://graph.facebook.com/v2.5"
-	node = "/" + page_id + "/feed?fields=message,created_time,story,comments"
+	node = "/" + page_id + "/feed?fields=message,created_time,story,comments{message,created_time}"
 	parameters = "&access_token=%s" % access_token
 	url = base + node + parameters
 
@@ -59,7 +59,7 @@ def calculateSentiments(data):
 	for i in range(0, len(data)):
 		post = data[i]
 		print "now we get the POST"
-		#print post
+		print post
 		dateOfPost = formatDate(data[i]['created_time'])
 		data[i]['created_time'] = dateOfPost
 		# Getting the comments
@@ -82,6 +82,7 @@ def calculateSentiments(data):
 			key = 'story'
 		elif ('message' in post):
 			key = 'message'
+		# !!!! it might be best to take the last elif out. Since there is no use to dealing with a post that has no message. This might also explain why other pages are problematic, some have photos etc...so not "test" per se
 		elif ('story' not in post and 'message' not in post):
 			key = 'message'
 			data[i]['message'] = ''
