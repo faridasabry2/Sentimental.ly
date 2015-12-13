@@ -29,11 +29,14 @@ def gettingFacebookPageData(page_id, access_token):
 
 	r = json.loads(request.text)
 	
-	print json.dumps(r, indent=4, sort_keys=True)
+	print "json dump stuff - bye bye"
+	#print json.dumps(r, indent=4, sort_keys=True)
 	if ('error' in r):
 		handleIncorrectURL()
 	
 	data = r['data']
+	print "initial data"
+	#print data
 
 	# get all data
 	while ('paging' in r):
@@ -44,6 +47,8 @@ def gettingFacebookPageData(page_id, access_token):
 			data.extend(r['data'])
 
 	print "done getting Facebook Page Data"
+	print "now all data"
+	#print data
 	return data
 
 def calculateSentiments(data):	
@@ -54,9 +59,25 @@ def calculateSentiments(data):
 	for i in range(0, len(data)):
 		post = data[i]
 		print "now we get the POST"
-		print post
-		date = formatDate(data[i]['created_time'])
-		data[i]['created_time'] = date
+		#print post
+		dateOfPost = formatDate(data[i]['created_time'])
+		data[i]['created_time'] = dateOfPost
+		# Getting the comments
+		if ('comments' in post):
+			print "looks like we have some comments"
+			allCommentsPerPost = post['comments']['data']
+			print allCommentsPerPost
+			# Note: All comments do show
+			print len(allCommentsPerPost)
+			for j in range(0, len(allCommentsPerPost)):
+				comment = allCommentsPerPost[j]
+				print "individual comment"
+				print comment
+				dateOfComment = formatDate(comment['created_time'])
+				data[i]['comments']['data'][j]['created_time'] = dateOfComment
+				print "new comment"
+				print data[i]['comments']['data'][j]
+
 		if ('story' in post):
 			key = 'story'
 		elif ('message' in post):
