@@ -59,24 +59,41 @@ def calculateSentiments(data):
 	for i in range(0, len(data)):
 		post = data[i]
 		print "now we get the POST"
-		print post
+		#print post
 		dateOfPost = formatDate(data[i]['created_time'])
 		data[i]['created_time'] = dateOfPost
+		postURL = "www.facebook.com/"+post['id']
+		data[i]['postURL'] = postURL
 		# Getting the comments
 		if ('comments' in post):
 			print "looks like we have some comments"
 			allCommentsPerPost = post['comments']['data']
-			print allCommentsPerPost
+			#print allCommentsPerPost
 			# Note: All comments do show
-			print len(allCommentsPerPost)
+			#print len(allCommentsPerPost)
+			avgScoreOfComments = 0
 			for j in range(0, len(allCommentsPerPost)):
+				#avgScoreOfComments = 0
 				comment = allCommentsPerPost[j]
 				print "individual comment"
-				print comment
+				#print comment
 				dateOfComment = formatDate(comment['created_time'])
 				data[i]['comments']['data'][j]['created_time'] = dateOfComment
-				print "new comment"
-				print data[i]['comments']['data'][j]
+				#print "new comment"
+				#print data[i]['comments']['data'][j]
+				scoreOfComment = indicoio.sentiment(comment['message'])
+				scoreOfComment = (scoreOfComment - 0.5) * 2
+				#print "scoreOfComment"
+				#print scoreOfComment
+				data[i]['comments']['data'][j]['individualCommentSentiment'] = scoreOfComment
+				data[i]['comments']['data'][j]['postURL'] = postURL
+				avgScoreOfComments = avgScoreOfComments + scoreOfComment
+				#print avgScoreOfComments
+			avgScoreOfComments = avgScoreOfComments / len(allCommentsPerPost)
+			#print avgScoreOfComments
+
+			#Add the avg score for comments of a certain post to the dictionary
+			data[i]['commentsAvgSentiments'] = avgScoreOfComments
 
 		if ('story' in post):
 			key = 'story'
@@ -90,6 +107,8 @@ def calculateSentiments(data):
 		toAnalyze.append(post[key])
 
 	sentiments = indicoio.sentiment(toAnalyze)
+	print "sentiments"
+	#print sentiments
 
 	for i in range(0, len(sentiments)):
 		sentiments[i] = (sentiments[i] - 0.5) / 0.5
@@ -99,6 +118,7 @@ def calculateSentiments(data):
 	dataDictionary = ast.literal_eval(dataJSONstring)
 	#print "dataDictionary"
 	#print dataDictionary
+	print json.dumps(data, indent=4, sort_keys=True)
 	return dataDictionary
 
 def formatDate(string):
