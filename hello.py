@@ -19,6 +19,12 @@ def showLineGraphs():
 	findSentiment.writeFacebookPageDataToJSON(fbPageName)
 	return render_template("testComments.html")
 
+@app.route("/test_newGraph", methods=["POST"])
+def testLineGraphs():
+	fbPageName = request.form.get("fbpage_name")
+	findSentiment.writeFacebookPageDataToJSON(fbPageName)
+	return render_template("testNewGraph.html")
+
 if __name__ == "__main__":
 	app.debug = True
 	app.run()

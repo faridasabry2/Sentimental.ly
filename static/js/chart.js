@@ -9,6 +9,8 @@ function barChart(dataset){
 	var padding = 25;
 
 	//Scale function for axes and radius
+	//Y axis use the post sentiment scores
+	//X axis used the 'created_time' field.
 	var yScale = d3.scale.linear()
 					.domain(d3.extent(dataset, function(d){return d.postSentiment;}))
 					.range([w+padding,padding]);
@@ -223,6 +225,7 @@ d3.json("/static/js/fbPageData.json", function(error, data){
 		}
 		else{
 			data.forEach(function(d) {
+				//Takes takes the value of the 'sentiment' key meaning the score.
 				d.postSentiment = d.sentiment;
 				//d.commentSentiment = d.
 				//var format = d3.time.format("%Y-%m-%d %H:%M:%S");
