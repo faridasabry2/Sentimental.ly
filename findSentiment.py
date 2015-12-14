@@ -109,8 +109,8 @@ def calculateSentiments(data):
 		# 	data[i]['message'] = ''
 		# 	post = data[i]
 		toAnalyze.append(post[key])
-	print "indicoio.sentiment('')"
-	print indicoio.sentiment('')
+	# print "indicoio.sentiment('')"
+	# print indicoio.sentiment('')
 	sentiments = indicoio.sentiment(toAnalyze)
 	print "sentiments"
 	#print sentiments
