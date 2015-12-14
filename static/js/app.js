@@ -1,21 +1,7 @@
 var main = function() {
 
+	//------------ post information ----------------------------
 	generateDataForLineChart();
-
-	//Load data and call bar chart function 
-	// d3.json("/static/js/fbPageData.json", function(error, data){
-			
-	// 		if(error){
-	// 			alert(error);
-	// 		}
-	// 		else{
-	// 			data.forEach(function(d) {
-	// 				d.postSentiment = d.sentiment;
-	// 			});
-
-	// 			barChart(data);
-	// 		}
-	// 	});
 
 	// Load facebook post data
 	var postID = 0;
@@ -60,8 +46,44 @@ var main = function() {
 				postContainer.append(post);
 
 			});
+
 	});
 
+	// d3.json("/static/js/fbPageData.json", function(error, data){
+			
+	// 		if(error){
+	// 			alert("effor with json "+error);
+	// 		}
+	// 		else{
+	// 			data.forEach(function(d) {
+	// 				d.postSentiment = d.sentiment;
+	// 			});
+
+	// 			barChart(data);
+	// 		}
+	// });
+
 };
+
+//------------ comment information ----------------------------
+
+function loadBarChart() {
+	alert("loading bar chart");
+	//Load data and call bar chart function 
+	d3.json("/static/js/fbPageData.json", function(error, data){
+			
+			if(error){
+				alert("effor with json "+error);
+			}
+			else{
+				data.forEach(function(d) {
+					d.postSentiment = d.sentiment;
+				});
+
+				barChart(data);
+			}
+	});
+};
+
 
 $(document).ready(main);
