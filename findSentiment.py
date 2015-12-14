@@ -17,7 +17,7 @@ def gettingFacebookPageData(page_id, access_token):
 
 	#construct the URL string
 	base = "https://graph.facebook.com/v2.5"
-	node = "/" + page_id + "/feed?fields=message,comments,created_time"
+	node = "/" + page_id + "/feed?fields=message,created_time,story,comments{message,created_time}"
 	parameters = "&access_token=%s" % access_token
 	url = base + node + parameters
 
@@ -29,11 +29,14 @@ def gettingFacebookPageData(page_id, access_token):
 
 	r = json.loads(request.text)
 	
-	print json.dumps(r, indent=4, sort_keys=True)
+	print "json dump stuff - bye bye"
+	#print json.dumps(r, indent=4, sort_keys=True)
 	if ('error' in r):
 		handleIncorrectURL()
 	
 	data = r['data']
+	print "initial data"
+	#print data
 
 	# get all data
 	while ('paging' in r):
@@ -44,6 +47,8 @@ def gettingFacebookPageData(page_id, access_token):
 			data.extend(r['data'])
 
 	print "done getting Facebook Page Data"
+	print "now all data"
+	#print data
 	return data
 
 def calculateSentiments(data):	
@@ -53,13 +58,48 @@ def calculateSentiments(data):
 	toAnalyze = []
 	for i in range(0, len(data)):
 		post = data[i]
+		print "now we get the POST"
 		#print post
-		date = formatDate(data[i]['created_time'])
-		data[i]['created_time'] = date
+		dateOfPost = formatDate(data[i]['created_time'])
+		data[i]['created_time'] = dateOfPost
+		postURL = "www.facebook.com/"+post['id']
+		data[i]['postURL'] = postURL
+		# Getting the comments
+		if ('comments' in post):
+			print "looks like we have some comments"
+			allCommentsPerPost = post['comments']['data']
+			#print allCommentsPerPost
+			# Note: All comments do show
+			#print len(allCommentsPerPost)
+			avgScoreOfComments = 0
+			for j in range(0, len(allCommentsPerPost)):
+				#avgScoreOfComments = 0
+				comment = allCommentsPerPost[j]
+				print "individual comment"
+				#print comment
+				dateOfComment = formatDate(comment['created_time'])
+				data[i]['comments']['data'][j]['created_time'] = dateOfComment
+				#print "new comment"
+				#print data[i]['comments']['data'][j]
+				scoreOfComment = indicoio.sentiment(comment['message'])
+				scoreOfComment = (scoreOfComment - 0.5) * 2
+				#print "scoreOfComment"
+				#print scoreOfComment
+				data[i]['comments']['data'][j]['individualCommentSentiment'] = scoreOfComment
+				data[i]['comments']['data'][j]['postURL'] = postURL
+				avgScoreOfComments = avgScoreOfComments + scoreOfComment
+				#print avgScoreOfComments
+			avgScoreOfComments = avgScoreOfComments / len(allCommentsPerPost)
+			#print avgScoreOfComments
+
+			#Add the avg score for comments of a certain post to the dictionary
+			data[i]['commentsAvgSentiments'] = avgScoreOfComments
+
 		if ('story' in post):
 			key = 'story'
 		elif ('message' in post):
 			key = 'message'
+		# !!!! it might be best to take the last elif out. Since there is no use to dealing with a post that has no message. This might also explain why other pages are problematic, some have photos etc...so not "test" per se
 		elif ('story' not in post and 'message' not in post):
 			key = 'message'
 			data[i]['message'] = ''
@@ -67,6 +107,8 @@ def calculateSentiments(data):
 		toAnalyze.append(post[key])
 
 	sentiments = indicoio.sentiment(toAnalyze)
+	print "sentiments"
+	#print sentiments
 
 	for i in range(0, len(sentiments)):
 		sentiments[i] = (sentiments[i] - 0.5) / 0.5
@@ -74,6 +116,9 @@ def calculateSentiments(data):
 
 	dataJSONstring = json.dumps(data)
 	dataDictionary = ast.literal_eval(dataJSONstring)
+	#print "dataDictionary"
+	#print dataDictionary
+	print json.dumps(data, indent=4, sort_keys=True)
 	return dataDictionary
 
 def formatDate(string):

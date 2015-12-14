@@ -1,16 +1,20 @@
 body {
 	margin-left: 90px;
 	margin-right: 90px;
-	background-color: #F68080
+	/*background-color: #F68080*/
+/*	background-color: #87CEFA*/
+    background-color: white;
 }
 
 #header h1 {
-	color: white;
+/*	color: white;*/
+    color: navy;
 	font-size: 90px;
 }
 
 #header h4 {
-	color: white;
+/*	color: white;*/
+    color: black;
 }
 
 .form {
@@ -27,7 +31,7 @@ body {
 }
 
 .positive{
-		fill: lightsteelblue;
+		fill: darkgreen;
 		fill-opacity: 0.9;
 	}
 .negative{

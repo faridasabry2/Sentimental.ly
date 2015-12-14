@@ -7,6 +7,8 @@ function barChart(dataset){
 	var padding = 25;
 
 	//Scale function for axes and radius
+	//Y axis use the post sentiment scores
+	//X axis used the 'created_time' field.
 	var yScale = d3.scale.linear()
 					.domain(d3.extent(dataset, function(d){return d.postSentiment;}))
 					.range([w+padding,padding]);
