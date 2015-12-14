@@ -39,12 +39,12 @@ def gettingFacebookPageData(page_id, access_token):
 	#print data
 
 	# get all data
-	while ('paging' in r):
-		url = r['paging']['next']
-		request = requests.get(url)
-		r = json.loads(request.text)
-		if (r['data']):
-			data.extend(r['data'])
+	# while ('paging' in r):
+	# 	url = r['paging']['next']
+	# 	request = requests.get(url)
+	# 	r = json.loads(request.text)
+	# 	if (r['data']):
+	# 		data.extend(r['data'])
 
 	print "done getting Facebook Page Data"
 	print "now all data"
