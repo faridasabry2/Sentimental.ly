@@ -20,9 +20,9 @@ function generateDataForLineChart() {
           data.forEach(function(d) {
               counter++;
               //postData.push([d.created_time,d.sentiment]);
-              postData.push([counter,d.sentiment,d.postURL,d.created_time]);
+              postData.push([counter,d.sentiment,d.postURL,d.created_time,d.comments]);
               //commentData.push([d.created_time,d.commentsAvgSentiments])
-              commentData.push([counter,d.commentsAvgSentiments,d.postURL,d.created_time]);
+              commentData.push([counter,d.commentsAvgSentiments,d.postURL,d.created_time,d.comments]);
               console.log("d.sentiment");
               console.log(d.sentiment);
               console.log("d.created_time");
@@ -88,10 +88,12 @@ var createLineChart = function(data) {
   var content =           
                   '<span class="value"> Time:  ' + e.point[3] + '</span>' +
                   '</p>'+
-                  '<span class="value"> Score: ' + formatter(e.point[1])*100 + '% </span>' +
+                  '<span class="value"> How happy? ' + formatter(e.point[1])*100 + '% </span>' +
                   '</p>'+
                   '<a href = "' + e.point[2] +'" target = "_blank">' + e.point[2] + '</a>'
                   ;
+  console.log("e");
+  console.log(e);
 
     nvtooltip.show([left, top], content);
   });
