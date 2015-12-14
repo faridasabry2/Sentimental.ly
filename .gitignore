@@ -1,1 +1,2 @@
-*.pyc 
+*.pyc
+/static/js/fbPageData.json 
