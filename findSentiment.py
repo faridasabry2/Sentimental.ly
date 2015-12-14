@@ -78,7 +78,7 @@ def calculateSentiments(data):
 				#avgScoreOfComments = 0
 				comment = allCommentsPerPost[j]
 				print "individual comment"
-				#print comment
+				print comment
 				dateOfComment = formatDate(comment['created_time'])
 				data[i]['comments']['data'][j]['created_time'] = dateOfComment
 				#print "new comment"
@@ -98,16 +98,19 @@ def calculateSentiments(data):
 			data[i]['commentsAvgSentiments'] = avgScoreOfComments
 
 		if ('story' in post):
-			key = 'story'
+			if post['story'] != '':
+				key = 'story'
 		elif ('message' in post):
-			key = 'message'
+			if post['message'] != '':
+				key = 'message'
 		# !!!! it might be best to take the last elif out. Since there is no use to dealing with a post that has no message. This might also explain why other pages are problematic, some have photos etc...so not "test" per se
 		# elif ('story' not in post and 'message' not in post):
 		# 	key = 'message'
 		# 	data[i]['message'] = ''
 		# 	post = data[i]
 		toAnalyze.append(post[key])
-
+	print "indicoio.sentiment('')"
+	print indicoio.sentiment('')
 	sentiments = indicoio.sentiment(toAnalyze)
 	print "sentiments"
 	#print sentiments
