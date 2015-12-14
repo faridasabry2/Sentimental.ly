@@ -4,7 +4,6 @@ var main = function() {
 	d3.json("/static/js/fbPageData.json", function(error, data){
 			
 			if(error){
-				alert("effor with json "+error);
 			}
 			else{
 				data.forEach(function(d) {
