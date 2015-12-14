@@ -1,5 +1,3 @@
-var dataset;
-
 //Define bar chart function 
 function barChart(dataset){	
 
@@ -217,33 +215,3 @@ function barChart(dataset){
 	
 };
 
-//Load data and call bar chart function 
-d3.json("/static/js/fbPageData.json", function(error, data){
-		
-		if(error){
-			console.log(error);
-		}
-		else{
-			data.forEach(function(d) {
-				//Takes takes the value of the 'sentiment' key meaning the score.
-				d.postSentiment = d.sentiment;
-				console.log("d.sentiment");
-				console.log(d.sentiment);
-				console.log("d.created_time");
-				console.log(d.created_time);
-				console.log("d.commentsAvgSentiments");
-				console.log(d.commentsAvgSentiments);
-				//d.commentSentiment = d.
-				//var format = d3.time.format("%Y-%m-%d %H:%M:%S");
-				//d.created_time = format.parse(d.created_time);
-			});
-
-
-			//data.forEach(function(d) {
-			//	d.dr_change = parseFloat(d.dr_change);
-			//	d.bus_change = parseFloat(d.bus_change);
-			//});
-			dataset = data;
-			barChart(dataset);
-		}
-	});

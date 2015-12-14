@@ -141,4 +141,4 @@ def handleIncorrectURL():
 	print "page not found error"
 	return -1
 
-#writeFacebookPageDataToJSON("testmyhappiness")
+writeFacebookPageDataToJSON("testmyhappiness")
