@@ -1,9 +1,11 @@
+// var postData = [],
+//     commentData = [];
+
+
 function log(text) {
   if (console && console.log) console.log(text);
   return text;
 }
-
-
 
 $(document).ready(function() {
   var margin = {top: 30, right: 10, bottom: 50, left: 60},
@@ -74,28 +76,57 @@ $(document).ready(function() {
               margin.top + margin.bottom + 2 : h;
   }
 
-
   //data
   function generateData() {
-    var sin = [],
-        cos = [],
-        r1 = Math.random(),
-        r2 = Math.random(),
-        r3 = Math.random(),
-        r4 = Math.random();
 
-    for (var i = 0; i < 50; i++) {
-      sin.push([ i, r1 * Math.sin( r2 +  i / (10 * (r4 + .5) ))]);
-      cos.push([ i, r2 * Math.cos( r3 + i / (10 * (r3 + .5) ))]);
-    }
+    var postData = [],
+        commentData = [];
 
+
+// json = JSON.parse( myjson );
+
+    //Load data and call bar chart function 
+    ////d3.json("/static/js/fbPageData.json", function(error, data){
+    d3.json("/static/js/fbPageData.json", function(data){   
+        //// if(error){
+          //// console.log("error:")
+          //// console.log(error);
+        //// }
+        //// else{
+          data.forEach(function(d) {
+              postData.push([d.created_time,d.sentiment]);
+              commentData.push([d.created_time,d.commentsAvgSentiments])
+              console.log("d.sentiment");
+              console.log(d.sentiment);
+              console.log("d.created_time");
+              console.log(d.created_time);
+              console.log("d.commentsAvgSentiments");
+              console.log(d.commentsAvgSentiments);
+              // d.postSentiment = d.sentiment;
+              // d.commentSentiment = d.commentsAvgSentiments;
+          });
+          console.log('postData1');
+          console.log(postData);
+          console.log('commentData1');
+          console.log(commentData);
+
+
+          // dataset = data;
+        ////}
+    });
+
+
+    console.log('postData');
+    console.log(postData);
+    console.log('commentData');
+    console.log(commentData);
     return [
       {
-        data: sin,
+        data: postData,
         label: "Posts"
       },
       {
-        data: cos,
+        data: commentData,
         label: "Comments"
       }
     ];

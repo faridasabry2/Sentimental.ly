@@ -64,6 +64,8 @@ def calculateSentiments(data):
 		data[i]['created_time'] = dateOfPost
 		postURL = "www.facebook.com/"+post['id']
 		data[i]['postURL'] = postURL
+		# I choose 0 to be the default for posts that do not have comments
+		data[i]['commentsAvgSentiments'] = 0
 		# Getting the comments
 		if ('comments' in post):
 			print "looks like we have some comments"

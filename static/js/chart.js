@@ -227,6 +227,12 @@ d3.json("/static/js/fbPageData.json", function(error, data){
 			data.forEach(function(d) {
 				//Takes takes the value of the 'sentiment' key meaning the score.
 				d.postSentiment = d.sentiment;
+				console.log("d.sentiment");
+				console.log(d.sentiment);
+				console.log("d.created_time");
+				console.log(d.created_time);
+				console.log("d.commentsAvgSentiments");
+				console.log(d.commentsAvgSentiments);
 				//d.commentSentiment = d.
 				//var format = d3.time.format("%Y-%m-%d %H:%M:%S");
 				//d.created_time = format.parse(d.created_time);
