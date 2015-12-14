@@ -114,6 +114,11 @@ function d3Line() {
               pointIndex: d.point,
               seriesIndex: d.series
             });
+          })
+
+          .on('click', function(d) {
+            console.log("d");
+            console.log(d);
           });
 
 
