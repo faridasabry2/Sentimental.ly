@@ -2,6 +2,7 @@
 function barChart(dataset, postSentiment){	
 
 	var svg = d3.select("#chart-container").remove();
+	$(".full-page").first().next().append($("<div>").attr("id", "chart-container"));
 
 	//Set width and height as fixed variables	
   	var w = $(".post-graph").width();
