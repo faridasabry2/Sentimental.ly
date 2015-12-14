@@ -1,9 +1,11 @@
 //Define bar chart function 
 function barChart(dataset, postSentiment){	
 
-	//Set width and height as fixed variables
-	var w = 520;
-	var h = 500;
+	var svg = d3.select("#chart-container").remove();
+
+	//Set width and height as fixed variables	
+  	var w = $(".post-graph").width();
+  	var h = $(".post-graph").height();
 	var padding = 25;
 
 	//Scale function for axes and radius
@@ -86,7 +88,7 @@ function barChart(dataset, postSentiment){
 						    .style("opacity", 1)
 						    .style("left", (d3.event.pageX+10) + "px")
 						    .style("top", (d3.event.pageY-30) + "px")
-						    .text(d.created_time);
+						    .text(d.created_time+" "+d.message);
 
 				if(state[0][0].selected){
 					info.append("p")
