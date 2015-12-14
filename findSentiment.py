@@ -56,6 +56,7 @@ def calculateSentiments(data):
 
 	# calculate each sentiment and add to JSON
 	toAnalyze = []
+	emptyMessagesIndexes = []
 	for i in range(0, len(data)):
 		post = data[i]
 		print "now we get the POST"
@@ -83,8 +84,11 @@ def calculateSentiments(data):
 				data[i]['comments']['data'][j]['created_time'] = dateOfComment
 				#print "new comment"
 				#print data[i]['comments']['data'][j]
-				scoreOfComment = indicoio.sentiment(comment['message'])
-				scoreOfComment = (scoreOfComment - 0.5) * 2
+				if comment['message'] != '':
+					scoreOfComment = indicoio.sentiment(comment['message'])
+					scoreOfComment = (scoreOfComment - 0.5) * 2
+				else:
+					scoreOfComment = 0
 				#print "scoreOfComment"
 				#print scoreOfComment
 				data[i]['comments']['data'][j]['individualCommentSentiment'] = scoreOfComment
@@ -100,15 +104,22 @@ def calculateSentiments(data):
 		if ('story' in post):
 			if post['story'] != '':
 				key = 'story'
+			else:
+				emptyMessagesIndexes.append(i)
 		elif ('message' in post):
 			if post['message'] != '':
 				key = 'message'
+			else:
+				emptyMessagesIndexes.append(i)
 		# !!!! it might be best to take the last elif out. Since there is no use to dealing with a post that has no message. This might also explain why other pages are problematic, some have photos etc...so not "test" per se
 		# elif ('story' not in post and 'message' not in post):
 		# 	key = 'message'
 		# 	data[i]['message'] = ''
 		# 	post = data[i]
 		toAnalyze.append(post[key])
+		if len(emptyMessagesIndexes) != 0:
+			for k in range(0, len(emptyMessagesIndexes)):
+				del toAnalyze[k]
 	# print "indicoio.sentiment('')"
 	# print indicoio.sentiment('')
 	sentiments = indicoio.sentiment(toAnalyze)
