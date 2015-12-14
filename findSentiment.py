@@ -17,9 +17,15 @@ def gettingFacebookPageData(page_id, access_token):
 
 	#construct the URL string
 	base = "https://graph.facebook.com/v2.5"
-	node = "/" + page_id + "/feed?fields=message,created_time,story,comments{message,created_time}"
+	#node = "/" + page_id + "/feed?fields=message,created_time,story,comments{message,created_time}"
+	node = "/" + page_id + "/feed?fields=message,likes,created_time,story,comments{message,created_time}"
+	#node = "/" + page_id + "/feed?fields=message,story,created_time,comments{message,created_time},likes.limit(1).summary(true)"
 	parameters = "&access_token=%s" % access_token
 	url = base + node + parameters
+
+	# g = facebook.GraphAPI('1918180781739655|5a76107345f3aac0ba8083549cae9955')
+	# print "ms"
+	# print g.getconnections(page_id,'links',limit=25,after='WTI5dGJXVnVkRjlqZFhKemIzSTZNVEF4T0RreE1UZzJNVFE0TXpVM05qb3hORFV3TURNeE1UZzE=')
 
 	# retrieve data
 	try:
@@ -65,6 +71,15 @@ def calculateSentiments(data):
 		data[i]['created_time'] = dateOfPost
 		postURL = "www.facebook.com/"+post['id']
 		data[i]['postURL'] = postURL
+		# Get and add the number of likes of a certain post
+		if ('likes' in post):
+			numLikes = len(post['likes']['data'])
+			print "numLikes"
+			print numLikes
+			data[i]['numLikes'] = numLikes
+		else:
+			print "no LIKES"
+			data[i]['numLikes'] = 0
 		# I choose 0 to be the default for posts that do not have comments
 		data[i]['commentsAvgSentiments'] = 0
 		# Getting the comments
@@ -74,6 +89,10 @@ def calculateSentiments(data):
 			#print allCommentsPerPost
 			# Note: All comments do show
 			#print len(allCommentsPerPost)
+
+			#Show all possible comments - also coming from next pages
+			#TO DO
+
 			avgScoreOfComments = 0
 			for j in range(0, len(allCommentsPerPost)):
 				#avgScoreOfComments = 0

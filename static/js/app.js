@@ -1,6 +1,19 @@
 var main = function() {
 
 	//------------ post information ----------------------------
+	d3.json("/static/js/fbPageData.json", function(error, data){
+			
+			if(error){
+				alert("effor with json "+error);
+			}
+			else{
+				data.forEach(function(d) {
+					d.postSentiment = d.sentiment;
+				});
+
+				barChart(data);
+			}
+	});
 	generateDataForLineChart();
 
 	// Load facebook post data

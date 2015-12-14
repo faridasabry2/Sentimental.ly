@@ -67,18 +67,18 @@ function barChart(dataset, messageSentiment){
 	    .attr("class", function(d){return d.commentSentiment < 0 ? "negative" : "positive";})
 	    .attr({
 	    	x: function(d){
-	    		alert(typeof d.created_time);
-	    		alert(d.created_time);
+	    		//alert(d.created_time);
+	    		//alert(typeof d.created_time);
 	    		return xScale(d.created_time);
 	    	},
 	    	y: function(d){
-	    		alert(typeof d.commentSentiment);
-	    		alert(d.commentSentiment);
-	    		return yScale(Math.max(0, d.commentSentiment)); 
+	    		alert(d.postSentiment);
+	    		return yScale(Math.max(0, d.postSentiment)); 
 	    	},
 	    	width: xScale.rangeBand(),
 	    	height: function(d){
-	    		return Math.abs(yScale(d.commentSentiment) - yScale(0)); 
+	    		alert(typeof d.postSentiment);
+	    		return Math.abs(yScale(d.postSentiment) - yScale(0)); 
 	    	}
 	    })
 	    .on('mouseover', function(d){
