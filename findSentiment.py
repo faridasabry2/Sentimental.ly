@@ -102,10 +102,10 @@ def calculateSentiments(data):
 		elif ('message' in post):
 			key = 'message'
 		# !!!! it might be best to take the last elif out. Since there is no use to dealing with a post that has no message. This might also explain why other pages are problematic, some have photos etc...so not "test" per se
-		elif ('story' not in post and 'message' not in post):
-			key = 'message'
-			data[i]['message'] = ''
-			post = data[i]
+		# elif ('story' not in post and 'message' not in post):
+		# 	key = 'message'
+		# 	data[i]['message'] = ''
+		# 	post = data[i]
 		toAnalyze.append(post[key])
 
 	sentiments = indicoio.sentiment(toAnalyze)
