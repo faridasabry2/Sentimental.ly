@@ -1,5 +1,5 @@
 //Define bar chart function 
-function barChart(dataset, messageSentiment){	
+function barChart(dataset, postSentiment){	
 
 	//Set width and height as fixed variables
 	var w = 520;
@@ -10,7 +10,7 @@ function barChart(dataset, messageSentiment){
 	//Y axis use the post sentiment scores
 	//X axis used the 'created_time' field.
 	var yScale = d3.scale.linear()
-					.domain(d3.extent(dataset, function(d){return d.postSentiment;}))
+					.domain(d3.extent(dataset, function(d){return d.commentSentiment;}))
 					.range([w+padding,padding]);
 
 	var xScale = d3.scale.ordinal()
@@ -67,13 +67,9 @@ function barChart(dataset, messageSentiment){
 	    .attr("class", function(d){return d.commentSentiment < 0 ? "negative" : "positive";})
 	    .attr({
 	    	x: function(d){
-	    		alert(typeof d.created_time);
-	    		alert(d.created_time);
 	    		return xScale(d.created_time);
 	    	},
 	    	y: function(d){
-	    		alert(typeof d.commentSentiment);
-	    		alert(d.commentSentiment);
 	    		return yScale(Math.max(0, d.commentSentiment)); 
 	    	},
 	    	width: xScale.rangeBand(),
@@ -92,9 +88,17 @@ function barChart(dataset, messageSentiment){
 						    .style("top", (d3.event.pageY-30) + "px")
 						    .text(d.created_time);
 
-
+				if(state[0][0].selected){
 					info.append("p")
 						    .text(formatPercent(d.commentSentiment));
+
+				}
+				else if(state[0][1].selected){
+					info.append("p")
+						    .text(formatPercent(d.bus_change));
+				}
+
+
 
 					})
     				.on('mouseout', function(d){
@@ -128,7 +132,7 @@ function barChart(dataset, messageSentiment){
 
 	// })
 
-	//Function to sort data when sort box is checked
+	// //Function to sort data when sort box is checked
 	// function sortChoice(){
 	// 		var state = d3.selectAll("option");
 	// 		var sort = d3.selectAll(".checkbox");
@@ -147,67 +151,67 @@ function barChart(dataset, messageSentiment){
 	// 		}
 	// };
 
-	//Change data to correct values on input change
-		// d3.selectAll("select").
-		// on("change", function() {
+	// //Change data to correct values on input change
+	// 	d3.selectAll("select").
+	// 	on("change", function() {
 		
-		// 	var value= this.value;
+	// 		var value= this.value;
 
-		// 	if(value=="bus"){
-		// 		var x_value = function(d){return d.bus_change;};
-		// 		var color = function(d){return d.bus_change < 0 ? "negative" : "positive";};
-		// 		var y_value = function(d){
-		//     		return yScale(Math.max(0, d.bus_change)); 
-		//     	};
-		//     	var height_value = function(d){
-		//     		return Math.abs(yScale(d.bus_change) - yScale(0));
-		//     	};	
-		// 	}
-		// 	else if(value=="demand"){
-		// 		var x_value = function(d){return d.commentSentiment;};
-		// 		var color = function(d){return d.commentSentiment < 0 ? "negative" : "positive";};
-		// 		var y_value = function(d){
-		//     		return yScale(Math.max(0, d.commentSentiment)); 
-		//     	};
-		//     	var height_value = function(d){
-		//     		return Math.abs(yScale(d.commentSentiment) - yScale(0)); 
-		//     	};	
-		// 	}
+	// 		if(value=="bus"){
+	// 			var x_value = function(d){return d.bus_change;};
+	// 			var color = function(d){return d.bus_change < 0 ? "negative" : "positive";};
+	// 			var y_value = function(d){
+	// 	    		return yScale(Math.max(0, d.bus_change)); 
+	// 	    	};
+	// 	    	var height_value = function(d){
+	// 	    		return Math.abs(yScale(d.bus_change) - yScale(0));
+	// 	    	};	
+	// 		}
+	// 		else if(value=="demand"){
+	// 			var x_value = function(d){return d.commentSentiment;};
+	// 			var color = function(d){return d.commentSentiment < 0 ? "negative" : "positive";};
+	// 			var y_value = function(d){
+	// 	    		return yScale(Math.max(0, d.commentSentiment)); 
+	// 	    	};
+	// 	    	var height_value = function(d){
+	// 	    		return Math.abs(yScale(d.commentSentiment) - yScale(0)); 
+	// 	    	};	
+	// 		}
 
-		// 	//Update y scale
-		// 	yScale.domain(d3.extent(dataset, x_value));
+	// 		//Update y scale
+	// 		yScale.domain(d3.extent(dataset, x_value));
 
-		// 	//Update with correct data
-		// 	var rect = svg.selectAll("rect").data(dataset, key);
-		// 	rect.exit().remove();
+	// 		//Update with correct data
+	// 		var rect = svg.selectAll("rect").data(dataset, key);
+	// 		rect.exit().remove();
 
-		// 	//Transition chart to new data
-		// 	rect
-		// 	.transition()
-		// 	.duration(2000)
-		// 	.ease("linear")
-		// 	.each("start", function(){
-		// 		d3.select(this)
-		// 		.attr("width", "0.2")
-		// 		.attr("class", color)
-		// 	})
-		// 	.attr({
-		//     	x: function(d){
-		//     		return xScale(d.created_time);
-		//     	},
-		//     	y: y_value,
-		//     	width: xScale.rangeBand(),
-		//     	height: height_value
+	// 		//Transition chart to new data
+	// 		rect
+	// 		.transition()
+	// 		.duration(2000)
+	// 		.ease("linear")
+	// 		.each("start", function(){
+	// 			d3.select(this)
+	// 			.attr("width", "0.2")
+	// 			.attr("class", color)
+	// 		})
+	// 		.attr({
+	// 	    	x: function(d){
+	// 	    		return xScale(d.created_time);
+	// 	    	},
+	// 	    	y: y_value,
+	// 	    	width: xScale.rangeBand(),
+	// 	    	height: height_value
 						
-		// 	});
+	// 		});
 
-		// 	//Update y-axis
-		// 	svg.select(".y.axis")
-		// 		.transition()
-		// 		.duration(1000)
-		// 		.ease("linear")
-		// 		.call(yAxis);
-		// });
+	// 		//Update y-axis
+	// 		svg.select(".y.axis")
+	// 			.transition()
+	// 			.duration(1000)
+	// 			.ease("linear")
+	// 			.call(yAxis);
+	// 	});
 	
 };
 

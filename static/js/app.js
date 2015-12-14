@@ -5,22 +5,26 @@ var main = function() {
 
 	// Load facebook post data
 	var postID = 0;
+	var postContainer = $('.post-display');
 	$.getJSON("/static/js/fbPageData.json", function(json){
-			var postContainer = $('.media-display');
+			
 			json.forEach(function(data) {
+				
 				var post = $("<div>");
 				post.addClass("media");
+				
+				//----------post ID------------
 				var postIdValue = "postID-"+postID;
 				post.attr('id', postIdValue);
 				postID++;
 				post.text(data.message);
 
-				// post info
+				//----------post info------------
 				var postInfoDiv = $("<div>");
 				postInfoDiv.addClass("post-info");
 				
 				var postInfo = $("<p>");
-				// get from data
+				// ******************CHANGE
 				var nComments = 101;
 				var nLikes = 1034;
 				var nShares = 45;
@@ -29,7 +33,7 @@ var main = function() {
 				postInfoDiv.append(postInfo);
 				post.append(postInfoDiv);
 
-				// post options
+				//----------post options------------
 				var postOptionsDiv = $("<div>");
 				postOptionsDiv.addClass("post-options");
 				var commentAnalysisLink = $("<a>");
@@ -37,7 +41,9 @@ var main = function() {
 				postOptionsDiv.append(commentAnalysisLink);
 				postOptionsDiv.click(function() {
 
-					//loadCommentAnalysis($(this).children("message-data").text());
+					
+					var commentDataString = $(this).parent().children(".post-data").text();
+					loadCommentAnalysis(commentDataString);
 
 					var body = $("body");
 					body.animate({
@@ -47,7 +53,14 @@ var main = function() {
 				postOptionsDiv.hide();
 				post.append(postOptionsDiv);
 
-				// post interactivity
+				//----------store post/message data as hidden------------
+				var postData = $("<div>");
+				postData.addClass("post-data");
+				postData.text( JSON.stringify(data) );
+				postData.hide();
+				post.append(postData);
+
+				//----------post interactivity------------
 				post.click(function() {
 					$(".media").removeClass("active");
 					$('.post-options').hide();
@@ -66,42 +79,38 @@ var main = function() {
 
 	});
 
-	// d3.json("/static/js/fbPageData.json", function(error, data){
-			
-	// 		if(error){
-	// 			alert("effor with json "+error);
-	// 		}
-	// 		else{
-	// 			data.forEach(function(d) {
-	// 				d.postSentiment = d.sentiment;
-	// 			});
-
-	// 			barChart(data);
-	// 		}
-	// });
 
 };
 
 //------------ comment information ----------------------------
 
-function loadCommentAnalysis(messageData) {
-
+function loadCommentAnalysis(postDataString) {
+	
 	// change string into json
-	var messageData = json.parse(messageData);
+	var postData = JSON.parse(postDataString);
 
-	var messageSentiment = messageData.sentiment;
+	if (postData.comments == undefined ) {
+		alert("There are no comments to analyze!");
+	} else {
+		var postSentiment = postData.sentiment;
 
-	var commentData = messageData.comments.data;
+		var commentData = postData.comments.data;
 
-	// change name of sentiment
-	commentData.forEach(function(data) {
-		d.commentSentiment = d.individualCommentSentiment;
-	});
+		// change name of sentiment
+		commentData.forEach(function(data) {
+			data.commentSentiment = parseFloat(data.individualCommentSentiment);
+		});
 
-	// create bar chart
-	barChart(commentData, messageSentiment);
+		// create bar chart
+		barChart(commentData, postSentiment);
 
-	// create comment display
+		// create comment display
+		loadCommentDisplay(postData)
+	}
+
+};
+
+function loadCommentDisplay(postData) {
 
 };
 

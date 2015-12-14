@@ -60,6 +60,7 @@ body {
 
 #chart-container{
 	text-align: center;
+	height: 100%;
 	border: solid 1px;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -144,6 +145,6 @@ ul{
 	margin-top: 100vh;
 	width = 100vw;
 	height = 100vh;
-	background-color: pink;
+	background-color: #e5ffff;
 }
 

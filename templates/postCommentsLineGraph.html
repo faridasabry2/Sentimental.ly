@@ -13,6 +13,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 
+
 	<!-- stylesheet -->
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/test.css') }}">
 
@@ -43,7 +44,7 @@
 							  <svg></svg>
 						</div>
 
-						<div class="container-fluid col-md-3 media-display">
+						<div class="container-fluid col-md-3 media-display post-display">
 							
 							<div class = "media">
 								<p>This is a Facebook post message content</p>
@@ -67,7 +68,7 @@
 	<div class="full-page" id = "page-two">
 		<a name="comment-analysis-page"></a>
 		<div id="chart-container">
-				<p>The sentiments of the posts on the page over time</p>
+				<p>The sentiments of the comments on the page in order of time time for the selected post</p>
 		</div>
 	</div>
 
@@ -83,7 +84,8 @@
 	<script src="/static/js/d3line.js"></script> 
 	<script src="/static/js/d3linewithlegend.js"></script> 
 	    <script type="text/javascript" src="{{ url_for('static',filename='js/linesChart.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static',filename='js/chart.js') }}"></script>
+
+	<script type="text/javascript" src="{{ url_for('static',filename='js/chart1.js') }}"></script>
 	        <script type="text/javascript" src="{{ url_for('static',filename='js/app.js') }}"></script>
 </body>
 </html>
