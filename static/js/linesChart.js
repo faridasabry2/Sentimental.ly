@@ -20,9 +20,9 @@ function generateDataForLineChart() {
           data.forEach(function(d) {
               counter++;
               //postData.push([d.created_time,d.sentiment]);
-              postData.push([counter,d.sentiment,d.postURL]);
+              postData.push([counter,d.sentiment,d.postURL,d.created_time]);
               //commentData.push([d.created_time,d.commentsAvgSentiments])
-              commentData.push([counter,d.commentsAvgSentiments,d.postURL]);
+              commentData.push([counter,d.commentsAvgSentiments,d.postURL,d.created_time]);
               console.log("d.sentiment");
               console.log(d.sentiment);
               console.log("d.created_time");
@@ -83,9 +83,12 @@ var createLineChart = function(data) {
         top = e.pos[1] + offset.top,
         formatter = d3.format(".04f");
 
-    var content = '<h3>' + e.series.label + '</h3>' +
-                  '<p>' +
-                  '<span class="value">[' + e.point[0] + ', ' + formatter(e.point[1]) + ']</span>' +
+//     var content = '<h3>' + e.series.label + '</h3>' +
+//                   '<p>' +
+  var content =           
+                  '<span class="value"> Time:  ' + e.point[3] + '</span>' +
+                  '</p>'+
+                  '<span class="value"> Score: ' + formatter(e.point[1])*100 + '% </span>' +
                   '</p>'+
                   '<a href = "' + e.point[2] +'" target = "_blank">' + e.point[2] + '</a>'
                   ;
