@@ -67,13 +67,17 @@ function barChart(dataset){
 	    .attr("class", function(d){return d.postSentiment < 0 ? "negative" : "positive";})
 	    .attr({
 	    	x: function(d){
+	    		//alert(d.created_time);
+	    		//alert(typeof d.created_time);
 	    		return xScale(d.created_time);
 	    	},
 	    	y: function(d){
+	    		alert(d.postSentiment);
 	    		return yScale(Math.max(0, d.postSentiment)); 
 	    	},
 	    	width: xScale.rangeBand(),
 	    	height: function(d){
+	    		alert(typeof d.postSentiment);
 	    		return Math.abs(yScale(d.postSentiment) - yScale(0)); 
 	    	}
 	    })
