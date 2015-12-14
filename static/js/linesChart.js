@@ -1,7 +1,3 @@
-// var postData = [],
-//     commentData = [];
-
-
 function log(text) {
   if (console && console.log) console.log(text);
   return text;
