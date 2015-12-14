@@ -16,9 +16,13 @@ function generateDataForLineChart() {
           //// console.log(error);
         //// }
         //// else{
+          var counter = -1;
           data.forEach(function(d) {
-              postData.push([d.created_time,d.sentiment]);
-              commentData.push([d.created_time,d.commentsAvgSentiments])
+              counter++;
+              //postData.push([d.created_time,d.sentiment]);
+              postData.push([counter,d.sentiment]);
+              //commentData.push([d.created_time,d.commentsAvgSentiments])
+              commentData.push([counter,d.commentsAvgSentiments]);
               console.log("d.sentiment");
               console.log(d.sentiment);
               console.log("d.created_time");
