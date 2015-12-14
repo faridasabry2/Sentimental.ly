@@ -3,7 +3,57 @@ function log(text) {
   return text;
 }
 
-$(document).ready(function() {
+function generateDataForLineChart() {
+
+    var postData = [],
+        commentData = [];
+
+            //Load data and call bar chart function 
+    ////d3.json("/static/js/fbPageData.json", function(error, data){
+    d3.json("/static/js/fbPageData.json", function(data){   
+        //// if(error){
+          //// console.log("error:")
+          //// console.log(error);
+        //// }
+        //// else{
+          data.forEach(function(d) {
+              postData.push([d.created_time,d.sentiment]);
+              commentData.push([d.created_time,d.commentsAvgSentiments])
+              console.log("d.sentiment");
+              console.log(d.sentiment);
+              console.log("d.created_time");
+              console.log(d.created_time);
+              console.log("d.commentsAvgSentiments");
+              console.log(d.commentsAvgSentiments);
+              // d.postSentiment = d.sentiment;
+              // d.commentSentiment = d.commentsAvgSentiments;
+          });
+
+          console.log('postData1');
+          console.log(postData);
+          console.log('commentData1');
+          console.log(commentData);  
+    
+        var result = [
+            {
+              data: postData,
+              label: "Posts"
+            },
+            {
+              data: commentData,
+              label: "Comments"
+            }
+        ];
+
+        var lineChart = createLineChart(result);
+
+    });
+
+}
+
+var createLineChart = function(data) {
+
+
   var margin = {top: 30, right: 10, bottom: 50, left: 60},
       chart = d3LineWithLegend()
                 .xAxis.label('Time')
@@ -13,7 +63,7 @@ $(document).ready(function() {
 
 
   var svg = d3.select('#test1 svg')
-      .datum(generateData())
+      .datum(data)
 
   svg.transition().duration(500)
       .attr('width', width(margin))
@@ -72,61 +122,5 @@ $(document).ready(function() {
               margin.top + margin.bottom + 2 : h;
   }
 
-  //data
-  function generateData() {
-
-    var postData = [],
-        commentData = [];
-
-
-// json = JSON.parse( myjson );
-
-    //Load data and call bar chart function 
-    ////d3.json("/static/js/fbPageData.json", function(error, data){
-    d3.json("/static/js/fbPageData.json", function(data){   
-        //// if(error){
-          //// console.log("error:")
-          //// console.log(error);
-        //// }
-        //// else{
-          data.forEach(function(d) {
-              postData.push([d.created_time,d.sentiment]);
-              commentData.push([d.created_time,d.commentsAvgSentiments])
-              console.log("d.sentiment");
-              console.log(d.sentiment);
-              console.log("d.created_time");
-              console.log(d.created_time);
-              console.log("d.commentsAvgSentiments");
-              console.log(d.commentsAvgSentiments);
-              // d.postSentiment = d.sentiment;
-              // d.commentSentiment = d.commentsAvgSentiments;
-          });
-          console.log('postData1');
-          console.log(postData);
-          console.log('commentData1');
-          console.log(commentData);
-
-
-          // dataset = data;
-        ////}
-    });
-
-
-    console.log('postData');
-    console.log(postData);
-    console.log('commentData');
-    console.log(commentData);
-    return [
-      {
-        data: postData,
-        label: "Posts"
-      },
-      {
-        data: commentData,
-        label: "Comments"
-      }
-    ];
-  }
-
-});
+};
 
