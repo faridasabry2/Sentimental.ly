@@ -67,3 +67,17 @@ ul{
 	padding-left: 0;
 	padding-right: 0;
 }
+
+.media {
+	background-color: white;
+	padding: 10px 10px 10px 10px;
+	font-size: 12px;
+}
+
+.media.active {
+	background-color: #ffff99;
+}
+
+.media .post-info {
+	color: #3b5998;
+}

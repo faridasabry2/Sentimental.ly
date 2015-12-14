@@ -17,7 +17,7 @@ def gettingFacebookPageData(page_id, access_token):
 
 	#construct the URL string
 	base = "https://graph.facebook.com/v2.5"
-	node = "/" + page_id + "/feed?fields=message,comments"
+	node = "/" + page_id + "/feed?fields=message,comments,created_time"
 	parameters = "&access_token=%s" % access_token
 	url = base + node + parameters
 
@@ -94,4 +94,4 @@ def handleIncorrectURL():
 	print "page not found error"
 	return -1
 
-#writeFacebookPageDataToJSON("testmyhappiness")
+writeFacebookPageDataToJSON("testmyhappiness")
