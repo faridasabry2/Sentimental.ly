@@ -6,15 +6,50 @@ body {
     background-color: white;
 }
 
+.full-page {
+    width: 100%;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    padding-left: 10px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    position: absolute;
+}
+
+#landing-page {
+	background-color: #e5ffff;
+}
+
+#post-information-container {
+	height: 70%;
+}
+
+.container-fluid {
+	height:100%;
+}
+
+.container-fluid .row {
+	height:100%;
+}
+
+.post-graph {
+	height: 100%;
+}
+
 #header h1 {
-/*	color: white;*/
-    color: navy;
+    color:  #009899;
 	font-size: 90px;
 }
 
 #header h4 {
-/*	color: white;*/
-    color: black;
+	margin-left: 15px;
+    color:  #009899;
 }
 
 .form {
@@ -79,6 +114,12 @@ ul{
   height: 100%;
 }
 
+.media-display {
+	height: 100%;
+	background-color:lightgrey; 
+	overflow: scroll; 
+}
+
 .media {
 	background-color: white;
 	padding: 10px 10px 10px 10px;
@@ -91,5 +132,18 @@ ul{
 
 .media .post-info {
 	color: #3b5998;
+}
+
+.media .post-options {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+/*-------- page 2 -------*/
+#page-two {
+	margin-top: 100vh;
+	width = 100vw;
+	height = 100vh;
+	background-color: pink;
 }
 

@@ -21,51 +21,54 @@
 
 <body>
 
+	<div class="full-page" id="landing-page">
+		<div id="header">
+			<h1>Sentimental.ly</h1>
+			<h4>How's your senti-mentality doing today?</h4>
+		</div>
+		<div class="col-md-4">
+			<div class="form">
+				<form action="test_newGraph" method="POST" class="form-inline" role="form">
+					<input name="fbpage_name" type="text" class="form-control" placeholder="Type the name of a public facebook page.">
+					<button type="submit" class="btn btn-primary">Get a line graph</button>
+				</form>
+			</div>
+		</div>
 
-	<div id="header">
-		<h1>Sentimental.ly</h1>
-		<h4>How's your senti-mentality doing today?</h4>
-	</div>
-	<div class="col-md-4">
-		<div class="form">
-			<form action="test_newGraph" method="POST" class="form-inline" role="form">
-				<input name="fbpage_name" type="text" class="form-control" placeholder="Type the name of a public facebook page.">
-				<button type="submit" class="btn btn-primary">Get a line graph</button>
-			</form>
+		<div id="post-information-container">
+			<div class="container-fluid">
+				<div class="row">
+					
+						<div class="post-graph col-md-9" id="test1">
+							  <svg></svg>
+						</div>
+
+						<div class="container-fluid col-md-3 media-display">
+							
+							<div class = "media">
+								<p>This is a Facebook post message content</p>
+								<div class="post-info">
+									<p>607 Comments • 6 Likes • 3 Shares</p>
+								</div>
+								<div class="post-options">
+									<a href="#comment-analysis-page">See detailed analysis</a>
+									
+								</div>
+							</div>
+
+						</div>
+
+				</div>
+
+			</div>
 		</div>
 	</div>
 
-
-	<div class="container-fluid">
-		<div class="row">
-			
-			<div class="col-md-9">
-				<div class="post-graph" id="test1">
-					  <svg></svg>
-				</div>
-			</div>
-
-			<div class="col-md-3">
-				<div class="container-fluid posts-display" style="background-color:lightgrey; overflow:scroll; max-height:500px;">
-				<div class = "media">
-					<p>This is a Facebook post message content</p>
-					<div class="post-info">
-					<p>607 Comments • 6 Likes • 3 Shares</p>
-				</div>
-				<div class="post-options">
-				</div>
-			</div>
-
+	<div class="full-page" id = "page-two">
+		<a name="comment-analysis-page"></a>
+		<div id="chart-container">
+				<p>The sentiments of the posts on the page over time</p>
 		</div>
-			</div>
-
-		</div>
-
-	</div>
-
-
-	<div id="chart-container">
-			<p>The sentiments of the posts on the page over time</p>
 	</div>
 
 	<!-- </div> -->
