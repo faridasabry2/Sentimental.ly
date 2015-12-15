@@ -5,26 +5,29 @@ function barChart(dataset, postSentiment){
 	$(".full-page").first().next().append($("<div>").attr("id", "chart-container"));
 
 	//Set width and height as fixed variables	
-  	var w = $(".post-graph").width();
-  	var h = $(".post-graph").height();
+  	var w = $("#chart-container").width();
+  	var h = $("#chart-container").height();
+ 
 	var padding = 25;
 
 	//Scale function for axes and radius
 	//Y axis use the post sentiment scores
 	//X axis used the 'created_time' field.
 	var yScale = d3.scale.linear()
-					.domain(d3.extent(dataset, function(d){return d.commentSentiment;}))
-					.range([w+padding,padding]);
+					.domain([-1, 1])
+					.range([h+padding,padding]);
+	yScale.domain([-1,1]);
 
 	var xScale = d3.scale.ordinal()
 					.domain(dataset.map(function(d){ return d.created_time;}))
-					.rangeRoundBands([padding,h+padding],.5);
+					.rangeRoundBands([padding,w+padding],.5);
 
 	//To format axis as a percent
 	var formatPercent = d3.format("%1");
 
-	//Create y axis
-	var yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5).tickFormat(formatPercent);
+	//Create x and y axis
+	var yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(10).tickFormat(formatPercent);
+	var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
 	//Define key function
 	var key = function(d){return d.created_time};
@@ -58,10 +61,6 @@ function barChart(dataset, postSentiment){
 
 		});
 
-
-	//Initialize state of chart according to drop down menu
-	var state = d3.selectAll("option");
-
 	//Create barchart
 	svg.selectAll("rect")
 		.data(dataset, key)
@@ -91,16 +90,8 @@ function barChart(dataset, postSentiment){
 						    .style("top", (d3.event.pageY-30) + "px")
 						    .text(d.created_time+" "+d.message);
 
-				if(state[0][0].selected){
 					info.append("p")
 						    .text(formatPercent(d.commentSentiment));
-
-				}
-				else if(state[0][1].selected){
-					info.append("p")
-						    .text(formatPercent(d.bus_change));
-				}
-
 
 
 					})
@@ -116,105 +107,14 @@ function barChart(dataset, postSentiment){
 	//Add y-axis
 	svg.append("g")
 			.attr("class", "y axis")
-			.attr("transform", "translate(40,0)")
+			.attr("transform", "translate(" + padding + ",0)")
 			.call(yAxis);
 
-	//Sort data when sort is checked
-	// d3.selectAll(".checkbox").
-	// on("change", function(){
-	// 	var x0 = xScale.domain(dataset.sort(sortChoice())
-	// 	.map(function(d){return d.created_time}))
-	// 	.copy();
-
-	// 	var transition = svg.transition().duration(750);
-	// 	var delay = function(d, i){return i*10;};
-
-	// 	transition.selectAll("rect")
-	// 	.delay(delay)
-	// 	.attr("x", function(d){return x0(d.created_time);});
-
-	// })
-
-	// //Function to sort data when sort box is checked
-	// function sortChoice(){
-	// 		var state = d3.selectAll("option");
-	// 		var sort = d3.selectAll(".checkbox");
-
-	// 		if(sort[0][0].checked && state[0][0].selected){
-	// 			var out = function(a,b){return b.dr_change - a.dr_change;}
-	// 			return out;
-	// 		}
-	// 		else if(sort[0][0].checked && state[0][1].selected){
-	// 			var out = function(a,b){return b.bus_change - a.bus_change;}
-	// 			return out;
-	// 		}
-	// 		else{
-	// 			var out = function(a,b){return d3.ascending(a.created_time, b.created_time);}
-	// 			return out;
-	// 		}
-	// };
-
-	// //Change data to correct values on input change
-	// 	d3.selectAll("select").
-	// 	on("change", function() {
-		
-	// 		var value= this.value;
-
-	// 		if(value=="bus"){
-	// 			var x_value = function(d){return d.bus_change;};
-	// 			var color = function(d){return d.bus_change < 0 ? "negative" : "positive";};
-	// 			var y_value = function(d){
-	// 	    		return yScale(Math.max(0, d.bus_change)); 
-	// 	    	};
-	// 	    	var height_value = function(d){
-	// 	    		return Math.abs(yScale(d.bus_change) - yScale(0));
-	// 	    	};	
-	// 		}
-	// 		else if(value=="demand"){
-	// 			var x_value = function(d){return d.commentSentiment;};
-	// 			var color = function(d){return d.commentSentiment < 0 ? "negative" : "positive";};
-	// 			var y_value = function(d){
-	// 	    		return yScale(Math.max(0, d.commentSentiment)); 
-	// 	    	};
-	// 	    	var height_value = function(d){
-	// 	    		return Math.abs(yScale(d.commentSentiment) - yScale(0)); 
-	// 	    	};	
-	// 		}
-
-	// 		//Update y scale
-	// 		yScale.domain(d3.extent(dataset, x_value));
-
-	// 		//Update with correct data
-	// 		var rect = svg.selectAll("rect").data(dataset, key);
-	// 		rect.exit().remove();
-
-	// 		//Transition chart to new data
-	// 		rect
-	// 		.transition()
-	// 		.duration(2000)
-	// 		.ease("linear")
-	// 		.each("start", function(){
-	// 			d3.select(this)
-	// 			.attr("width", "0.2")
-	// 			.attr("class", color)
-	// 		})
-	// 		.attr({
-	// 	    	x: function(d){
-	// 	    		return xScale(d.created_time);
-	// 	    	},
-	// 	    	y: y_value,
-	// 	    	width: xScale.rangeBand(),
-	// 	    	height: height_value
-						
-	// 		});
-
-	// 		//Update y-axis
-	// 		svg.select(".y.axis")
-	// 			.transition()
-	// 			.duration(1000)
-	// 			.ease("linear")
-	// 			.call(yAxis);
-	// 	});
+	//Add x-axis
+	svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + ( (h/2) + padding ) + ")")
+			.call(xAxis);
 	
 };
 
