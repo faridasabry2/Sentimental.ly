@@ -1,12 +1,13 @@
 //Define bar chart function 
 function barChart(dataset, postSentiment){	
-
-	var svg = d3.select("#chart-container").remove();
-	$(".full-page").first().next().append($("<div>").attr("id", "chart-container"));
+	
+	// clear old chart by removing div and create new div container for chart
+	var svg = d3.select("#comment-chart-svg").remove();
+	$(".comment-graph").append($("<div>").attr("id", "comment-chart-svg"));
 
 	//Set width and height as fixed variables	
-  	var w = $("#chart-container").width();
-  	var h = $("#chart-container").height();
+  	var w = $("#comment-chart-svg").width();
+  	var h = $("#comment-chart-svg").height();
  
 	var padding = 25;
 
@@ -27,7 +28,7 @@ function barChart(dataset, postSentiment){
 
 	//Create x and y axis
 	var yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(10).tickFormat(formatPercent);
-	var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+	var xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(0);
 
 	//Define key function
 	var key = function(d){return d.created_time};
@@ -38,7 +39,7 @@ function barChart(dataset, postSentiment){
 							.style("opacity", 0);
 
 	//Create svg element
-	var svg = d3.select("#chart-container").append("svg")
+	var svg = d3.select("#comment-chart-svg").append("svg")
 			.attr("width", w).attr("height", h)
 			.attr("id", "chart")
 			.attr("viewBox", "0 0 "+w+ " "+h)
@@ -107,13 +108,13 @@ function barChart(dataset, postSentiment){
 	//Add y-axis
 	svg.append("g")
 			.attr("class", "y axis")
-			.attr("transform", "translate(" + padding + ",0)")
+			.attr("transform", "translate(" + (padding+20) + ",0)")
 			.call(yAxis);
 
 	//Add x-axis
 	svg.append("g")
 			.attr("class", "x axis")
-			.attr("transform", "translate(0," + ( (h/2) + padding ) + ")")
+			.attr("transform", "translate(20," + ( (h/2) + padding ) + ")")
 			.call(xAxis);
 	
 };

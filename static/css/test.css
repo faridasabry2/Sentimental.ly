@@ -26,6 +26,24 @@ body {
 	background-color: #e5ffff;
 }
 
+#header h1 {
+    color:  #009899;
+	font-size: 90px;
+}
+
+#header h4 {
+	margin-left: 15px;
+    color:  #009899;
+}
+
+
+.form {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+/* -------- post graph container -------- */
+
 #post-information-container {
 	height: 70%;
 }
@@ -42,72 +60,7 @@ body {
 	height: 100%;
 }
 
-#header h1 {
-    color:  #009899;
-	font-size: 90px;
-}
-
-#header h4 {
-	margin-left: 15px;
-    color:  #009899;
-}
-
-.form {
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
-
-
-#chart-container{
-	text-align: center;
-	height: 100%;
-	border: solid 1px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
-
-.positive{
-		fill: darkgreen;
-		fill-opacity: 0.9;
-	}
-.negative{
-		fill: darkred;
-		fill-opacity: 0.9;
-	}
-.axis path,
-.axis line {
-			fill: none;
-			stroke: black;
-			shape-rendering: crispEdges;
-	}
-.axis text {
-			font-family: sans-serif;
-			font-size: 10px;	
-	}
-div.tooltip {   
-	  position: absolute;     
-	  text-align: center;
-	  vertical-align: middle;   
-	  width: 150px;                  
-	  height: 50px;                 
-	  padding: 5px; 
-	  color: #000000;          
-	  font-size: 12px;     
-	  background: #FFF;
-	  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-	  border: 2px;  
-	  border-radius: 8px;  
-	  pointer-events: none;                  
-	} 
-li{
-	overflow:hidden;
-	display: inline-block;
-}
-ul{
-	padding-left: 0;
-	padding-right: 0;
-}
-
+/* -------- post graph d3 styling -------- */
 #test1 {
   margin: 0;
   padding: 0;
@@ -115,6 +68,7 @@ ul{
   height: 100%;
 }
 
+/* -------- message display -------- */
 .media-display {
 	height: 100%;
 	background-color:lightgrey; 
@@ -140,11 +94,74 @@ ul{
 	padding-bottom: 3px;
 }
 
-/*-------- page 2 -------*/
+/* -------- page 2 -------- */
 #page-two {
 	margin-top: 100vh;
 	width = 100vw;
 	height = 100vh;
 	background-color: #e5ffff;
+	padding: 20px 20px 20px 20px;
 }
+
+/* -------- comment graph container -------- */
+.comment-graph {
+	height: 100%;
+}
+
+#comment-chart-svg{
+	text-align: center;
+	height: 100%;
+}
+
+/* -------- comment graph d3 styling -------- */
+.comment-graph .x.axis text { 
+	display: none; 
+}
+
+.axis text {
+			font-family: sans-serif;
+			font-size: 10px;	
+	}
+
+.positive{
+		fill: darkgreen;
+		fill-opacity: 0.9;
+	}
+.negative{
+		fill: darkred;
+		fill-opacity: 0.9;
+	}
+.axis path,
+.axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+	}
+
+div.tooltip {   
+	  position: absolute;     
+	  text-align: center;
+	  vertical-align: middle;   
+	  width: 150px;                  
+	  height: 200px;                 
+	  padding: 5px; 
+	  color: #000000;          
+	  font-size: 12px;     
+	  background: #FFF;
+	  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	  border: 2px;  
+	  border-radius: 8px;  
+	  pointer-events: none;                  
+	}
+
+.tooltip li{
+	overflow:hidden;
+	display: inline-block;
+}
+.tooltip ul{
+	padding-left: 0;
+	padding-right: 0;
+}
+
+
 
