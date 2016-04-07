@@ -5,6 +5,7 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
 	<!-- Latest compiled and minified CSS -->
 	<link href="/static/css/d3.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
@@ -29,7 +30,7 @@
 		</div>
 		<div class="col-md-4">
 			<div class="form">
-				<form action="test_newGraph" method="POST" class="form-inline" role="form">
+				<form action="pageAnalysis" method="POST" class="form-inline" role="form">
 					<input name="fbpage_name" type="text" class="form-control" placeholder="Type the name of a public facebook page.">
 					<button type="submit" class="btn btn-primary">Get a line graph</button>
 				</form>
@@ -93,7 +94,7 @@
 	<script src="/static/js/d3linewithlegend.js"></script> 
 	    <script type="text/javascript" src="{{ url_for('static',filename='js/linesChart.js') }}"></script>
 
-	<script type="text/javascript" src="{{ url_for('static',filename='js/chart1.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/barchart.js') }}"></script>
 	        <script type="text/javascript" src="{{ url_for('static',filename='js/app.js') }}"></script>
 </body>
 </html>

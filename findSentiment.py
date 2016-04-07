@@ -40,6 +40,7 @@ def gettingFacebookPageData(page_id, access_token):
 	if ('error' in r):
 		handleIncorrectURL()
 	
+	print json.dumps(r, indent=4, sort_keys=True)
 	data = r['data']
 	print "initial data"
 	#print data
@@ -95,27 +96,21 @@ def calculateSentiments(data):
 
 			avgScoreOfComments = 0
 			for j in range(0, len(allCommentsPerPost)):
-				#avgScoreOfComments = 0
 				comment = allCommentsPerPost[j]
 				print "individual comment"
 				print comment
 				dateOfComment = formatDate(comment['created_time'])
 				data[i]['comments']['data'][j]['created_time'] = dateOfComment
-				#print "new comment"
-				#print data[i]['comments']['data'][j]
 				if comment['message'] != '':
 					scoreOfComment = indicoio.sentiment(comment['message'])
 					scoreOfComment = (scoreOfComment - 0.5) * 2
 				else:
 					scoreOfComment = 0
-				#print "scoreOfComment"
-				#print scoreOfComment
 				data[i]['comments']['data'][j]['individualCommentSentiment'] = scoreOfComment
 				data[i]['comments']['data'][j]['postURL'] = postURL
 				avgScoreOfComments = avgScoreOfComments + scoreOfComment
-				#print avgScoreOfComments
+
 			avgScoreOfComments = avgScoreOfComments / len(allCommentsPerPost)
-			#print avgScoreOfComments
 
 			#Add the avg score for comments of a certain post to the dictionary
 			data[i]['commentsAvgSentiments'] = avgScoreOfComments
@@ -139,11 +134,8 @@ def calculateSentiments(data):
 		if len(emptyMessagesIndexes) != 0:
 			for k in range(0, len(emptyMessagesIndexes)):
 				del toAnalyze[k]
-	# print "indicoio.sentiment('')"
-	# print indicoio.sentiment('')
+
 	sentiments = indicoio.sentiment(toAnalyze)
-	print "sentiments"
-	#print sentiments
 
 	for i in range(0, len(sentiments)):
 		sentiments[i] = (sentiments[i] - 0.5) / 0.5
@@ -151,8 +143,6 @@ def calculateSentiments(data):
 
 	dataJSONstring = json.dumps(data)
 	dataDictionary = ast.literal_eval(dataJSONstring)
-	#print "dataDictionary"
-	#print dataDictionary
 	print json.dumps(data, indent=4, sort_keys=True)
 	return dataDictionary
 
@@ -174,4 +164,4 @@ def handleIncorrectURL():
 	print "page not found error"
 	return -1
 
-writeFacebookPageDataToJSON("testmyhappiness")
+#writeFacebookPageDataToJSON("testmyhappiness")

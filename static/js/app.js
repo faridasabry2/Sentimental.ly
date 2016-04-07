@@ -37,11 +37,16 @@ var main = function() {
 				
 				var postInfo = $("<p>");
 				// ******************CHANGE
-				var nComments = 101;
-				var nLikes = 1034;
-				var nShares = 45;
+				var time = data.created_time;
+				var nLikes = data.numLikes;
+				var nShares = "x";
+				if (data.comments !== undefined){
+					nComments = data.comments.data.length;
+				} else {
+					nComments = 0;
+				}
 
-				postInfo.text(nComments+" Comments • "+nLikes+" Likes • "+nShares+" Shares");
+				postInfo.text(time+" • "+ nComments+" Comments • "+nLikes+" Likes • "+nShares+" Shares");
 				postInfoDiv.append(postInfo);
 				post.append(postInfoDiv);
 
@@ -70,7 +75,7 @@ var main = function() {
 				postData.addClass("post-data");
 				postData.text( JSON.stringify(data) );
 				postData.hide();
-				post.append(postData);
+				post.prepend(postData);
 
 				//----------post interactivity------------
 				post.click(function() {
@@ -124,6 +129,21 @@ function loadCommentAnalysis(postDataString) {
 
 function loadCommentDisplay(postData) {
 
+};
+
+//------------ post scrolling ----------------------------
+function activatePost(postID) {
+	$(".media").removeClass("active");
+	$('.post-options').hide();
+	var elementID = "#postID-"+postID;
+	var scrollToPost = $(elementID);
+	var postContainer = $('.post-display');
+	postContainer.animate({
+		scrollTop: scrollToPost.offset().top - postContainer.offset().top + postContainer.scrollTop()
+	}, 1000);
+
+	scrollToPost.addClass("active");
+	scrollToPost.children(".post-options").show();
 };
 
 

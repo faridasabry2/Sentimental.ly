@@ -13,8 +13,8 @@ function generateDataForLineChart() {
             var counter = -1;
             data.forEach(function(d) {
                   counter++;
-                  postData.push([counter,d.sentiment,d.postURL,d.created_time,d.comments]);
-                  commentData.push([counter,d.commentsAvgSentiments,d.postURL,d.created_time,d.comments]);
+                  postData.unshift([counter,d.sentiment,d.postURL,d.created_time,d.comments]);
+                  commentData.unshift([counter,d.commentsAvgSentiments,d.postURL,d.created_time,d.comments]);
               // d.postSentiment = d.sentiment;
               // d.commentSentiment = d.commentsAvgSentiments;
           });

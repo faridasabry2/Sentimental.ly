@@ -119,6 +119,8 @@ function d3Line() {
           .on('click', function(d) {
             console.log("d");
             console.log(d);
+            // INTERACT WITH SCROLL BAR OF POSTS
+            activatePost(d.point);
           });
 
 

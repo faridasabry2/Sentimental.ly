@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-	return render_template("postCommentsLineGraph.html")
+	return render_template("index.html")
 
 # @app.route("/post_find", methods=["POST"])
 # def eventually():
@@ -19,11 +19,11 @@ def hello():
 # 	findSentiment.writeFacebookPageDataToJSON(fbPageName)
 # 	return render_template("testComments.html")
 
-@app.route("/test_newGraph", methods=["POST"])
+@app.route("/pageAnalysis", methods=["POST"])
 def testLineGraphs():
 	fbPageName = request.form.get("fbpage_name")
 	findSentiment.writeFacebookPageDataToJSON(fbPageName)
-	return render_template("postCommentsLineGraph.html")
+	return render_template("index.html")
 
 if __name__ == "__main__":
 	app.debug = True
